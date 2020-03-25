@@ -23,7 +23,8 @@ component extends="coldbox.system.testing.BaseTestCase" {
 	}
 
 	private function isOldACF(){
-		return listFind( "11,2016", listFirst( server.coldfusion.productVersion ) );
+		var isLucee = StructKeyExists(server, 'lucee');
+		return !isLucee and listFind( "11,2016", listFirst( server.coldfusion.productVersion ) );
 	}
 
 	function run() {
@@ -180,7 +181,7 @@ component extends="coldbox.system.testing.BaseTestCase" {
 				} );
 
 				it( "validates missing bucketname", function() {
-				  expect( function(){ s3.getBucket(); }).toThrow( message='bucketName is required' );
+					expect( function(){ s3.getBucket(); }).toThrow( message='bucketName is required' );
 				} );
 
 				it( "Allows default bucket name", function() {
